@@ -13,10 +13,10 @@
 # limitations under the License.
 """This package exposes credentials for talking to a Docker registry."""
 
-from __future__ import absolute_import
-from __future__ import division
 
-from __future__ import print_function
+
+
+
 
 import abc
 import base64
@@ -67,7 +67,7 @@ class SchemeProvider(Provider):
 
   def Get(self):
     """Gets the credential in a form suitable for an Authorization header."""
-    return u'%s %s' % (self._scheme, self.suffix)
+    return '%s %s' % (self._scheme, self.suffix)
 
 
 class Basic(SchemeProvider):
@@ -164,7 +164,7 @@ class Helper(Basic):
 
     # Some keychains expect a scheme:
     # https://github.com/bazelbuild/rules_docker/issues/111
-    stdout = p.communicate(input='https://' + self._registry)[0]
+    stdout = p.communicate(input=('https://' + self._registry).encode('ascii'))[0]
     if stdout.strip() == _MAGIC_NOT_FOUND_MESSAGE:
       # Use empty auth when no auth is found.
       logging.info('Credentials not found, falling back to anonymous auth.')
@@ -256,7 +256,7 @@ class _DefaultKeychain(Keychain):
     else:
       config_file = os.path.join(_GetConfigDirectory(), self._config_file)
     try:
-      with io.open(config_file, u'r', encoding='utf8') as reader:
+      with io.open(config_file, 'r', encoding='utf8') as reader:
         cfg = json.loads(reader.read())
     except IOError:
       # If the file doesn't exist, fallback on anonymous auth.

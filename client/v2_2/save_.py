@@ -241,7 +241,7 @@ def fast(image,
 
       if cache_directory:
         # Search for a local cached copy
-        cached_layer = os.path.join(cache_directory, digest)
+        cached_layer = os.path.join(cache_directory.encode('utf8'), digest)
         if os.path.exists(cached_layer) and valid(cached_layer, digest):
           f = executor.submit(link, cached_layer, layer_name)
           future_to_params[f] = layer_name

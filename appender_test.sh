@@ -17,6 +17,7 @@
 # Unit tests for puller.par
 
 # Trick to chase the symlink before the docker build.
+rm -f appender2.par
 cp appender.par appender2.par
 
 # Test appending to an image.
@@ -37,5 +38,5 @@ function test_appender() {
 
 
 test_appender gcr.io/google-appengine/nodejs:latest \
-  gcr.io/containerregistry-releases/appender-testing:latest
+  gcr.io/sensai-platform/appender-testing:latest
 
